@@ -1,11 +1,11 @@
 class Solution {
 public:
     int minInsertions(string s) {
-        stack<int>st;
+        int balence = 0;
         int ans = 0;
         for(int i = 0;i < s.length();i++){
             if(s[i] == '('){
-                st.push('(');
+                balence += 2;
             }else{
               if(i + 1 < s.length() && s[i + 1] == ')'){
                 i++;
@@ -13,14 +13,14 @@ public:
                 ans++;
               }
 
-              if(!st.empty()){
-                st.pop();
+              if(balence > 0){
+                balence -= 2;
               }else{
                 ans++;
               }
             }
         }
-        ans += 2 * st.size();
+        ans += balence;
         return ans;
     }
 };
