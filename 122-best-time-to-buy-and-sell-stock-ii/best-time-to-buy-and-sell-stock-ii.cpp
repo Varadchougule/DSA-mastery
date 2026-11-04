@@ -64,8 +64,8 @@ public:
 
     int solveSO(vector<int>&prices){
         int n = prices.size();
-        vector<int>next(n+1,0);
-        vector<int>curr(n+1,0);
+        vector<int>next(3,0);
+        vector<int>curr(3,0);
 
         for(int index = n-1;index >= 0;index--){
             for(int buy = 1;buy >= 0;buy--){
