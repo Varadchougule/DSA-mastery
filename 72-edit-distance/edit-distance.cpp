@@ -76,11 +76,43 @@ public:
             }
             return dp[0][0];
     }
+
+        int solveSO(string &word1, string &word2){
+        int n = word1.length();
+        int m = word2.length();
+        vector<int>next(m+1,0);
+        vector<int>curr(m+1,0);
+
+            for(int j = 0; j <= m; j++) {
+                next[j] = m - j;
+            }
+
+            for(int i = n-1;i >= 0;i--){
+                curr[m] = n - i ;
+                for(int j = m-1 ;j >= 0;j--){
+                     int ans = 0;
+                    if(word1[i] == word2[j]){
+                        ans = next[j+1];
+                    }else{
+                        int insertAns = 1 + curr[j+1];
+                        int deleteAns = 1 + next[j];
+                        int replaceAns = 1 + next[j+1];
+
+                        ans = min(insertAns,min(deleteAns,replaceAns));
+                    }
+                    curr[j] = ans;
+                }
+                next = curr;
+            }
+            return next[0];
+    }
     int minDistance(string word1, string word2) {
         // int n = word1.length();
         // int m = word2.length();
         // vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
         // return solveMem(word1,word2,0,0,dp);
-        return solveTab(word1,word2);
+        //return solveTab(word1,word2);
+
+        return solveSO(word1,word2);
     }
 };
