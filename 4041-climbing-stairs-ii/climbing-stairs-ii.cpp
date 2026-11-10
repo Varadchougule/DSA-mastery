@@ -50,12 +50,10 @@ public:
     }
 
     int solveSO(int n, vector<int>& costs) {
-        vector<int> dp(n+1, -1);
-        dp[0] = 0;
-
         int prev1 = 0;
-        int prev2 = costs[0];
-        int prev3 = costs[1];
+        int prev2 = 0;
+        int prev3 = 0;
+        int ans = 0;
 
         for(int i = 1;i <= n;i++){
             int step1 = prev1 + costs[i-1] + 1;
@@ -68,19 +66,19 @@ public:
             }
 
             if(i >= 3) {
-                step3 = prev2 + costs[i-1] + 9;
+                step3 = prev3 + costs[i-1] + 9;
             }
-            dp[i] = min({step1, step2, step3});
-            prev2 = prev1;
+           ans = min({step1, step2, step3});
             prev3 = prev2;
-
+            prev2 = prev1;
+            prev1 = ans;
         }
 
         
-        return prev3;
+        return prev1;
     }
 
     int climbStairs(int n, vector<int>& costs) {
-        return solveTab(n, costs);
+        return solveSO(n, costs);
     }
 };
