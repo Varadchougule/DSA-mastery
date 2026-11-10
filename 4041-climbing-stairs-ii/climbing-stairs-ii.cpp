@@ -49,6 +49,37 @@ public:
         return dp[n];
     }
 
+    int solveSO(int n, vector<int>& costs) {
+        vector<int> dp(n+1, -1);
+        dp[0] = 0;
+
+        int prev1 = 0;
+        int prev2 = costs[0];
+        int prev3 = costs[1];
+
+        for(int i = 1;i <= n;i++){
+            int step1 = prev1 + costs[i-1] + 1;
+
+            int step2 = INT_MAX;
+            int step3 = INT_MAX;
+
+            if(i >= 2) {
+                step2 = prev2 + costs[i-1] + 4;
+            }
+
+            if(i >= 3) {
+                step3 = prev2 + costs[i-1] + 9;
+            }
+            dp[i] = min({step1, step2, step3});
+            prev2 = prev1;
+            prev3 = prev2;
+
+        }
+
+        
+        return prev3;
+    }
+
     int climbStairs(int n, vector<int>& costs) {
         return solveTab(n, costs);
     }
